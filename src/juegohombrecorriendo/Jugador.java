@@ -102,8 +102,6 @@ public class Jugador extends ElementoDinamico {
 
         int yJugador = 220 + posicionSalto;
 
-        System.out.println("posicionSalto: " + posicionSalto);
-        System.out.println("yJugador: " + yJugador);
 
         numeroImagen = estaCorriendo ? numeroImagen : imagenes.length / 2;
         Image imagen = new javax.swing.ImageIcon(getClass().getResource("/imagenes/skins/" + personajes[personajeActual] + "/" + imagenes[numeroImagen])).getImage();

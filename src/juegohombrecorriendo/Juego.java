@@ -61,7 +61,7 @@ public class Juego {
    * Termina el juego
    */
   void terminar() {
-    pausar();
+   pausar();
     //TODO validar lo que necesitamos hacer adicionalmente
   }
   

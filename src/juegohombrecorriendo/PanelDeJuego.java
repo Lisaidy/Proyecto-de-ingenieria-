@@ -24,6 +24,8 @@ public class PanelDeJuego extends JPanel {
   int posicionNube2Y = 60;
   int anchuraNube2 = 400;
   Obstaculo[] obstaculos;
+  ObstaculoDinamicos[] obstaculoDinamico;
+  
   Juego juego;
   VentanaJuego ventanaJuego;
   Bosque bosque;
@@ -40,6 +42,7 @@ public class PanelDeJuego extends JPanel {
     botonReiniciar.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
+        
         ventanaJuego.iniciarODetener("Iniciar");
         botonReiniciar.setVisible(false);
       }
@@ -86,7 +89,7 @@ public class PanelDeJuego extends JPanel {
       juego.jugador.cargarImagen();
     }
     
-    System.out.println("juego: " + juego);
+    //System.out.println("juego: " + juego);
   }
 
   @Override
@@ -129,23 +132,38 @@ public class PanelDeJuego extends JPanel {
     if (bosque != null) {
       bosque.dibujar(g);
 
-      if (obstaculos == null) {
-        obstaculos = new Obstaculo[]{ new Obstaculo(this, bosque.getCarretera()) };
-      }
+      /*if (obstaculos == null) {
+        //obstaculos = new Obstaculo[]{ new Obstaculo(this, bosque.getCarretera()) };
+      }*/
 
-      for (Obstaculo obstaculo : obstaculos) {
+      /*for (Obstaculo obstaculo : obstaculos) {
         obstaculo.dibujar(g);
-      }
+      }*/
+      
+      if(obstaculoDinamico == null) {
+            obstaculoDinamico = new ObstaculoDinamicos[] { 
+              new ObstaculoDinamicos( "/imagenes/obstaculoNuevo.png",this, bosque.getCarretera(), 500),
+              new ObstaculoDinamicos( "/imagenes/Planta Piraña.png",this, bosque.getCarretera(), 1500),
+              new ObstaculoDinamicos( this, bosque.getCarretera(), 1000)
+            };
+          }
+          
+         for (ObstaculoDinamicos obstaculo : obstaculoDinamico) {
+            obstaculo.dibujar(g);
+            //System.out.print(" \nLa violencia es mala");
+          }
     }
+    
+    
 
     if( juego != null ) {
       juego.jugador.dibujar(g);
 
       boolean seAcaboElJuego = false;
-      for (Obstaculo obstaculo : obstaculos) {
+      for (ObstaculoDinamicos obstaculoDinamico: obstaculoDinamico) {
         Rectangle rectanguloHombre = new Rectangle(juego.jugador.limites);
 
-        if (rectanguloHombre.intersects(obstaculo.limites)) {
+        if (rectanguloHombre.intersects(obstaculoDinamico.limites)) {
           seAcaboElJuego = true;
           break;
         }
@@ -157,8 +175,15 @@ public class PanelDeJuego extends JPanel {
         g.drawString("Game Over!", getWidth() / 2, getHeight() / 2);
 
         botonReiniciar.setLocation(getWidth() / 2, getHeight() / 2);
+        
         botonReiniciar.setVisible(true);
+       
         juego.terminar();
+        
+        for (ObstaculoDinamicos obstaculo : obstaculoDinamico) {
+            obstaculo.ReiniciarPosicion();
+            //System.out.print(" \nLa violencia es mala");
+          }
       }
     }
 
