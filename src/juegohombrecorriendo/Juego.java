@@ -17,10 +17,12 @@ public class Juego {
 
   enum Clima {LLOVIENDO, NEVANDO, NORMAL};
   enum Tiempo {DIA, NOCHE};
+ 
   enum EstadoJugador {DETENIDO, CORRIENDO, SALTANDO};
   
   PanelDeJuego panelDeJuego;
   Tiempo tiempo;
+  Tiempo tiempo1;
   Clima clima;
   EstadoJugador estadoJugador;
   private final Timer temporizador;
@@ -28,6 +30,7 @@ public class Juego {
   
   public Juego() {
     tiempo = Tiempo.DIA;
+    tiempo1 = Tiempo.NOCHE;
     clima = Clima.NORMAL;
     estadoJugador = EstadoJugador.DETENIDO;
     temporizador = new Timer(100, new ActionListener() {
@@ -74,7 +77,7 @@ public class Juego {
   }
   
   public boolean esDeNoche() {
-    return tiempo == Tiempo.NOCHE;
+    return tiempo1 == Tiempo.NOCHE;
   }
 
   public boolean estaNevando() {
